@@ -1,0 +1,126 @@
+/* Estilo general del cuerpo de la página */
+body {
+    font-family: 'Roboto', sans-serif;
+    background: linear-gradient(135deg, #1f1f1f, #3a3a3a); /* Fondo con un degradado oscuro */
+    color: #e0e0e0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+    overflow: hidden;
+}
+
+/* Contenedor principal */
+form {
+    background: rgba(255, 255, 255, 0.1); /* Fondo semi-transparente */
+    padding: 30px;
+    border-radius: 12px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5); /* Sombra más pronunciada */
+    text-align: center;
+    backdrop-filter: blur(10px); /* Desenfoque del fondo */
+    border: 1px solid rgba(255, 255, 255, 0.2); /* Borde suave */
+    position: relative;
+    overflow: hidden;
+}
+
+/* Estilo del título */
+h1 {
+    color: #00e676;
+    margin-bottom: 30px;
+    font-size: 2rem; /* Tamaño de fuente grande */
+    text-shadow: 0 0 10px #00e676, 0 0 20px #00e676; /* Sombra de neón */
+}
+
+/* Estilo del input de archivo */
+input[type="file"] {
+    display: block;
+    margin: 20px auto;
+    padding: 10px;
+    border-radius: 8px;
+    background: #333;
+    color: #fff;
+    border: 2px dashed #00e676; /* Borde con línea discontinua */
+    cursor: pointer;
+    transition: border-color 0.3s ease;
+}
+
+input[type="file"]:hover {
+    border-color: #00c853;
+}
+
+/* Estilo del botón de enviar */
+input[type="submit"] {
+    background: linear-gradient(135deg, #00e676, #00c853); /* Gradiente de color */
+    color: #fff;
+    border: none;
+    border-radius: 8px;
+    padding: 12px 24px;
+    cursor: pointer;
+    font-size: 18px;
+    box-shadow: 0 0 10px #00e676, 0 0 20px #00e676; /* Sombra de neón */
+    transition: transform 0.3s ease, background 0.3s ease;
+}
+
+input[type="submit"]:hover {
+    background: linear-gradient(135deg, #00c853, #00e676); /* Cambio de color en hover */
+    transform: scale(1.1); /* Efecto de zoom */
+}
+
+/* Estilo del modal */
+.modal {
+    display: none; /* Oculto por defecto */
+    position: fixed;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.7); /* Fondo semi-transparente */
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+}
+
+/* Contenido del modal */
+.modal-content {
+    background: rgba(0, 0, 0, 0.9); /* Fondo oscuro */
+    color: #e0e0e0;
+    padding: 30px;
+    border-radius: 12px;
+    text-align: center;
+    width: 50%;
+    max-width: 500px;
+    position: relative;
+}
+
+/* Estilo de la barra de progreso */
+.progress-container {
+    width: 100%;
+    background: #333;
+    border-radius: 8px;
+    overflow: hidden;
+    margin: 20px auto;
+    position: relative;
+}
+
+.progress-bar {
+    height: 10px;
+    width: 0;
+    background: #00e676;
+    transition: width 0.4s ease;
+}
+
+/* Estilo del botón de cerrar en el modal de éxito */
+#closeSuccessModal {
+    background-color: #00e676;
+    color: #fff;
+    border: none;
+    border-radius: 8px;
+    padding: 10px 20px;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+#closeSuccessModal:hover {
+    background-color: #00c853;
+}

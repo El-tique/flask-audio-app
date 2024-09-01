@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Subir archivo</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+<body>
+    <div class="container">
+        <h1>Sube un archivo de audio</h1>
+        <form id="uploadForm" action="/upload" method="post" enctype="multipart/form-data">
+            <label for="fileInput" class="file-label">Selecciona un archivo .wav</label>
+            <input id="fileInput" type="file" name="file" accept=".wav" required>
+            <input type="submit" value="Subir">
+        </form>
+    </div>
+
+    <!-- Modal de carga -->
+    <div id="loadingModal" class="modal">
+        <div class="modal-content">
+            <div class="progress-container">
+                <div id="progressBar" class="progress-bar"></div>
+            </div>
+            <p id="progressText">Espere por favor, estamos optimizando tu tiempo.</p>
+        </div>
+    </div>
+
+    <!-- Modal de éxito -->
+    <div id="successModal" class="modal">
+        <div class="modal-content">
+            <p>Trabajo realizado con éxito</p>
+            <button id="closeSuccessModal">Cerrar</button>
+        </div>
+    </div>
+
+    <script>
+        document.getElementById('uploadForm').addEventListener('submit', function(event) {
+            event.preventDefault(); // Prevenir el envío del formulario para mostrar el modal
+
+            // Mostrar el modal de carga
+            document.getElementById('loadingModal').style.display = 'flex';
+
+            var formData = new FormData(this);
+            var xhr = new XMLHttpRequest();
+            xhr.open('POST', this.action, true);
+
+            xhr.onload = function() {
+                if (xhr.status === 200) {
+                    // Mostrar el modal de éxito
+                    document.getElementById('successModal').style.display = 'flex';
+
+                    // Crear un enlace para la descarga
+                    var link = document.createElement('a');
+                    link.href = URL.createObjectURL(xhr.response);
+                    link.download = 'transcripcion.txt';
+                    document.body.appendChild(link);
+                    link.click();
+                    document.body.removeChild(link);
+                } else {
+                    console.error('Error:', xhr.statusText);
+                    document.getElementById('loadingModal').style.display = 'none';
+                }
+            };
+
+            xhr.onerror = function() {
+                console.error('Request failed');
+                document.getElementById('loadingModal').style.display = 'none';
+            };
+
+            xhr.responseType = 'blob'; // Para tratar la respuesta como un archivo
+            xhr.send(formData);
+
+            // Consultar el progreso cada 1 segundo
+            var progressInterval = setInterval(function() {
+                var progressXhr = new XMLHttpRequest();
+                progressXhr.open('GET', '/progress', true);
+                progressXhr.onload = function() {
+                    if (progressXhr.status === 200) {
+                        var progressData = JSON.parse(progressXhr.responseText);
+                        var [current, total] = progressData.progress.split('/');
+                        var percent = Math.round((current / total) * 100);
+                        document.getElementById('progressBar').style.width = percent + '%';
+                        document.getElementById('progressText').innerText = 'Procesando: ' + percent + '%';
+
+                        if (percent === 100) {
+                            clearInterval(progressInterval);
+                        }
+                    }
+                };
+                progressXhr.send();
+            }, 1000); // Consultar cada 1 segundo
+        });
+
+        document.getElementById('closeSuccessModal').addEventListener('click', function() {
+            document.getElementById('successModal').style.display = 'none';
+        });
+    </script>
+</body>
+</html>
