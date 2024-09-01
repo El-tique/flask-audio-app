@@ -22,6 +22,7 @@ Flask==3.0.3
 flatbuffers==24.3.25
 fonttools==4.53.1
 fsspec==2024.6.1
+gunicorn
 gast==0.6.0
 google-pasta==0.2.0
 grpcio==1.66.0
